@@ -255,7 +255,7 @@ document.getElementById('modal').onclick = function(e) {
 };
 
 (function floats() {
-  const symbols = ['🌸','🎵','🎶','♬','✦'];
+  const symbols = ['🌻','🎵','🎶','♬','✦'];
   const layer = document.getElementById('floatLayer');
 
   for (let i = 0; i < 28; i++) {
