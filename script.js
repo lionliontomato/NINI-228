@@ -258,6 +258,10 @@ document.getElementById('modal').onclick = function(e) {
   const symbols = ['🌻','🎵','🎶','♬','✦'];
   const layer = document.getElementById('floatLayer');
 
+  if (!layer) return;
+
+  layer.innerHTML = '';
+
   for (let i = 0; i < 28; i++) {
     const el = document.createElement('span');
     el.className = 'float';
