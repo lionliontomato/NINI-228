@@ -8,77 +8,10 @@
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌻</text></svg>">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;700&amp;family=Zen+Maru+Gothic:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
-
-<style>
-:root{
-  --pink-900:#8a3f5b; --pink-800:#b15273; --pink-700:#d87ca0; --pink-600:#ff90b5;
-  --pink-400:#ffa3c3; --pink-300:#ffc0d0; --pink-200:#ffd6e2; --pink-100:#fff0f7;
-  --cream:#fff8f4; --ink:#5a2f40; --muted:#9a6377; --white:rgba(255,255,255,.82);
-  --shadow:0 18px 45px rgba(217,107,147,.18); --radius:26px;
-}
-
-*{box-sizing:border-box} 
-html{scroll-behavior:smooth}
-
-/* === 進階粉紅少女古風背景 === */
-body{
-  margin:0;
-  min-height:100vh;
-  color:var(--ink);
-  font-family:'Zen Maru Gothic','Noto Serif TC',system-ui,sans-serif;
-
-  background:
-    radial-gradient(circle at 15% 15%, rgba(255,192,203,0.5), transparent 40%),
-    radial-gradient(circle at 70% 25%, rgba(255,160,185,0.4), transparent 50%),
-    radial-gradient(circle at 25% 60%, rgba(255,210,230,0.25), transparent 55%),
-    radial-gradient(circle at 80% 80%, rgba(255,180,200,0.18), transparent 55%),
-    linear-gradient(135deg, #ff90b5 0%, #ffc0d0 60%, #ffd6e2 100%),
-    repeating-linear-gradient(45deg, rgba(255,240,245,0.04), rgba(255,240,245,0.04) 1px, transparent 1px, transparent 25px);
-
-  background-blend-mode: lighten;
-  background-size: 600px 600px, 500px 500px, 400px 400px, 800px 800px, auto, auto;
-  background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, repeat;
-
-  overflow-x:hidden;
-}
-
-/* 直接漂浮花瓣 */
-.float{
-  position:fixed;
-  bottom:-8vh;
-  font-size:clamp(16px,2.4vw,28px);
-  opacity:0.4;
-  filter:drop-shadow(0 6px 12px rgba(217,107,147,.15));
-  animation:rise linear infinite;
-  transform-origin: center;
-}
-
-/* 漂浮動畫 */
-@keyframes rise{
-  0%{transform:translateY(0) rotate(0deg) scale(0.8); opacity:0}
-  15%{opacity:0.45}
-  50%{transform:translateY(-60vh) rotate(180deg) scale(1)}
-  100%{transform:translateY(-112vh) rotate(360deg) scale(0.9); opacity:0}
-}
-
-/* === 以下保留你原本排版、按鈕、卡片樣式 === */
-.wrap{position:relative;z-index:1;max-width:1180px;margin:0 auto;padding:42px 20px 70px}
-.hero{padding:34px;border-radius:36px;background:linear-gradient(135deg,rgba(255,255,255,.8),rgba(255,243,247,.66));box-shadow:var(--shadow);border:1px solid rgba(255,255,255,.8);backdrop-filter:blur(18px);text-align:center !important;display:flex !important;flex-direction:column !important;align-items:center !important}
-.eyebrow{display:inline-flex;gap:8px;align-items:center;justify-content:center;padding:8px 14px;border-radius:999px;background:rgba(255,143,177,.16);color:var(--pink-800);font-weight:700;letter-spacing:.08em;margin:0 auto;text-align:center !important}
-.hero h1{font-family:'Noto Serif TC',serif;font-size:clamp(36px,6vw,68px);line-height:1.1;margin:20px 0 12px;color:var(--pink-900);letter-spacing:.06em;text-align:center !important;width:100%}
-.hero p{margin:0;color:var(--muted);font-size:17px;line-height:1.9;text-align:center !important;width:100%}
-/* 省略其餘原有樣式，保持不動 */
-</style>
+<link href="style.css" rel="stylesheet"/>
 </head>
 
 <body>
-
-<!-- 直接漂浮花瓣 -->
-<span class="float" style="left:10%; animation-duration:12s;">🌸</span>
-<span class="float" style="left:25%; animation-duration:10s; animation-delay:2s;">🌸</span>
-<span class="float" style="left:40%; animation-duration:14s; animation-delay:1s;">🌸</span>
-<span class="float" style="left:60%; animation-duration:11s; animation-delay:3s;">🌸</span>
-<span class="float" style="left:75%; animation-duration:13s; animation-delay:0.5s;">🌸</span>
 
 <main class="wrap">
   <section class="hero">
@@ -105,5 +38,6 @@ body{
   </div>
 </div>
 
+<script src="script.js"></script>
 </body>
 </html>
