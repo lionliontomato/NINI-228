@@ -11,10 +11,10 @@ html{scroll-behavior:smooth}
 body{
   margin:0; min-height:100vh; color:var(--ink); font-family:'Zen Maru Gothic','Noto Serif TC',system-ui,sans-serif;
   overflow-x:hidden;
+  position: relative;
   background: radial-gradient(circle at 12% 10%, rgba(255,209,223,.95), transparent 34%),
               radial-gradient(circle at 85% 15%, rgba(255,225,234,.9), transparent 28%),
               linear-gradient(135deg,#fff3f7 0%,#ffe1ea 48%,#fff8f4 100%);
-  position: relative;
 }
 
 body:before{
@@ -27,7 +27,7 @@ body:before{
   mask-image:linear-gradient(to bottom,rgba(0,0,0,.7),transparent 84%);
 }
 
-/* 背景圖片改成絕對網址，保證 GitHub Pages 可以載入 */
+/* 背景圖片改成 GitHub Pages 絕對網址 */
 body::after {
   content: "";
   position: fixed;
