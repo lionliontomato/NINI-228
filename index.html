@@ -11,6 +11,7 @@
 <link href="style.css" rel="stylesheet"/>
 </head>
 <body>
+
 <!-- 浮動花瓣容器 -->
 <div class="float-layer" id="floatLayer"></div>
 
@@ -43,11 +44,12 @@
 <script>
 // 自動生成漂浮花瓣
 const floatLayer = document.getElementById('floatLayer');
-for(let i=0;i<12;i++){
+for(let i=0;i<15;i++){
   const flower = document.createElement('div');
   flower.className = 'float';
   flower.style.setProperty('--left', `${Math.random()*100}%`);
   flower.style.setProperty('--delay', `${Math.random()*6}s`);
+  flower.style.setProperty('--dur', `${8+Math.random()*6}s`);
   flower.textContent = '🌸';
   floatLayer.appendChild(flower);
 }
