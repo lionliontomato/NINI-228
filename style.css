@@ -60,6 +60,7 @@ body{
   100%{transform:translateY(-112vh) rotate(360deg) scale(0.9); opacity:0}
 }
 
+/* 以下保留你原本樣式 */
 .wrap{position:relative;z-index:1;max-width:1180px;margin:0 auto;padding:42px 20px 70px}
 
 .hero{
