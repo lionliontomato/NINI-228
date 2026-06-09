@@ -12,10 +12,10 @@ body{
   margin:0; min-height:100vh; color:var(--ink); font-family:'Zen Maru Gothic','Noto Serif TC',system-ui,sans-serif;
   overflow-x:hidden;
   position: relative;
-  background: radial-gradient(circle at 12% 10%, rgba(255,209,223,.95), transparent 34%),
-              radial-gradient(circle at 85% 15%, rgba(255,225,234,.9), transparent 28%),
-              linear-gradient(135deg,#fff3f7 0%,#ffe1ea 48%,#fff8f4 100%),
-              radial-gradient(circle at 50% 80%, rgba(255,239,244,.2), transparent 50%);
+  background:
+    radial-gradient(circle at 12% 10%, rgba(255,209,223,.95), transparent 34%),
+    radial-gradient(circle at 85% 15%, rgba(255,225,234,.9), transparent 28%),
+    linear-gradient(135deg,#fff3f7 0%,#ffe1ea 48%,#fff8f4 100%);
 }
 
 body:before{
@@ -28,7 +28,7 @@ body:before{
   mask-image:linear-gradient(to bottom,rgba(0,0,0,.7),transparent 84%);
 }
 
-/* 背景圖片改成 GitHub Pages 絕對網址，保證顯示 */
+/* 少女 + 古風裝飾元素 */
 body::after {
   content: "";
   position: fixed;
@@ -36,28 +36,15 @@ body::after {
   pointer-events: none;
   z-index: 0;
   background:
-    url('https://lionliontomato.github.io/NINI-228/images/kitty_strawberry.jpg') no-repeat left bottom 8% 15% / 120px auto,
-    url('https://lionliontomato.github.io/NINI-228/images/kitty_hat.jpg') no-repeat right top 12% 10% / 100px auto,
-    url('https://i.ibb.co/5xq5tGh/chinese-floral.png') repeat;
+    radial-gradient(circle at 20% 15%, rgba(255,192,203,0.18) 10px, transparent 11px),
+    radial-gradient(circle at 75% 20%, rgba(255,182,193,0.12) 8px, transparent 9px),
+    radial-gradient(circle at 30% 75%, rgba(255,228,225,0.14) 12px, transparent 13px),
+    repeating-radial-gradient(circle at 50% 50%, rgba(255,200,220,0.06), rgba(255,200,220,0.06) 1px, transparent 2px, transparent 4px);
   opacity: 0.08;
   filter: blur(2px);
 }
 
-.float-layer{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0}
-
-.float{
-  position:absolute;bottom:-8vh;font-size:clamp(18px,2.6vw,32px);opacity:.42;
-  filter:drop-shadow(0 8px 12px rgba(217,107,147,.15));
-  animation:rise var(--dur) linear infinite;left:var(--left);animation-delay:var(--delay)
-}
-
-@keyframes rise{
-  0%{transform:translateY(0) rotate(0deg);opacity:0}
-  15%{opacity:.45}
-  100%{transform:translateY(-112vh) rotate(360deg);opacity:0}
-}
-
-/* 以下保持原有 CSS 內容 */
+/* 以下保持你原本 CSS 完整不動 */
 .wrap{position:relative;z-index:1;max-width:1180px;margin:0 auto;padding:42px 20px 70px}
 .hero{padding:34px;border-radius:36px;background:linear-gradient(135deg,rgba(255,255,255,.8),rgba(255,243,247,.66));box-shadow:var(--shadow);border:1px solid rgba(255,255,255,.8);backdrop-filter:blur(18px);text-align:center !important;display:flex !important;flex-direction:column !important;align-items:center !important}
 .eyebrow{display:inline-flex;gap:8px;align-items:center;justify-content:center;padding:8px 14px;border-radius:999px;background:rgba(255,143,177,.16);color:var(--pink-800); font-weight:700;letter-spacing:.08em;margin:0 auto;text-align:center !important;}
