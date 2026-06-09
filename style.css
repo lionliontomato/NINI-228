@@ -28,7 +28,7 @@ body:before{
   mask-image:linear-gradient(to bottom,rgba(0,0,0,.7),transparent 84%);
 }
 
-/* 背景圖片使用絕對網址，保證 GitHub Pages 可讀取 */
+/* 背景圖片使用 GitHub Pages 絕對網址 */
 body::after {
   content: "";
   position: fixed;
@@ -57,7 +57,7 @@ body::after {
   100%{transform:translateY(-112vh) rotate(360deg);opacity:0}
 }
 
-/* 保持原 CSS 內容不動 */
+/* 以下保持原 CSS 內容 */
 .wrap{position:relative;z-index:1;max-width:1180px;margin:0 auto;padding:42px 20px 70px}
 .hero{padding:34px;border-radius:36px;background:linear-gradient(135deg,rgba(255,255,255,.8),rgba(255,243,247,.66));box-shadow:var(--shadow);border:1px solid rgba(255,255,255,.8);backdrop-filter:blur(18px);text-align:center !important;display:flex !important;flex-direction:column !important;align-items:center !important}
 .eyebrow{display:inline-flex;gap:8px;align-items:center;justify-content:center;padding:8px 14px;border-radius:999px;background:rgba(255,143,177,.16);color:var(--pink-800); font-weight:700;letter-spacing:.08em;margin:0 auto;text-align:center !important;}
