@@ -27,6 +27,7 @@ body:before{content:"";position:fixed;inset:0;pointer-events:none;background-ima
   align-items:center !important;
 }
 
+/* ← 改動這裡，讓 ♫ 變大 */
 .eyebrow{
   display:inline-flex;
   gap:8px;
@@ -40,6 +41,7 @@ body:before{content:"";position:fixed;inset:0;pointer-events:none;background-ima
   letter-spacing:.08em;
   margin:0 auto;
   text-align:center !important;
+  font-size:1.5rem; /* <- 放大 ♫ */
 }
 
 .hero h1{
