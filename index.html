@@ -6,51 +6,28 @@
 <title>念念的歌單</title>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌻</text></svg>">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌸</text></svg>">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;700&amp;family=Zen+Maru+Gothic:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
-<!-- CSS 版本號加上 ?v=1002 -->
-<link rel="stylesheet" href="https://lionliontomato.github.io/NINI-228/style.css?v=1002">
+<link href="style.css" rel="stylesheet"/>
 </head>
 <body>
 <div class="float-layer" id="floatLayer"></div>
 <main class="wrap">
-  <section class="hero">
-    <span class="eyebrow"> ♫</span>
-    <h1>念念の歌單</h1>
-    <p>公主城堡歡迎你。</p>
-    <div class="controls">
-      <input class="search" id="search" placeholder="搜尋歌名、歌手或分類…"/>
-      <button class="random" id="randomBtn" type="button">🎲 隨機抽歌</button>
-    </div>
-    <div class="tags" id="tags"></div>
-    <div class="meta"><span id="count">讀取中…</span><span class="status" id="status"></span></div>
-  </section>
-  <section class="grid" id="grid"></section>
-  <div class="empty" id="empty">沒有找到符合條件的歌曲</div>
-</main>
-<div class="modal" id="modal">
-  <div class="modal-card">
-    <h2>🌻 念念推薦</h2>
-    <div class="big" id="pickSong"></div>
-    <div id="pickArtist"></div>
-    <button class="close" id="closeModal" type="button">賓果！</button>
-  </div>
+<section class="hero">
+<span class="eyebrow"> ♫</span>
+<h1>念念的歌單</h1>
+<p>走過路過歡迎一起來聽首歌吧。</p>
+<div class="controls">
+<input class="search" id="search" placeholder="搜尋歌名、歌手或分類…"/>
+<button class="random" id="randomBtn" type="button">🎲 隨機抽歌</button>
 </div>
-
-<script>
-// 動態生成漂浮少女元素
-const floatLayer = document.getElementById('floatLayer');
-const emojis = ['❤️','⭐','🌸'];
-for(let i=0;i<35;i++){
-  const span = document.createElement('span');
-  span.className='float';
-  span.style.setProperty('--dur',`${5+Math.random()*12}s`);
-  span.style.setProperty('--left',`${Math.random()*100}%`);
-  span.style.setProperty('--delay',`${Math.random()*5}s`);
-  span.textContent = emojis[Math.floor(Math.random()*emojis.length)];
-  floatLayer.appendChild(span);
-}
-</script>
+<div class="tags" id="tags"></div>
+<div class="meta"><span id="count">讀取中…</span><span class="status" id="status"></span></div>
+</section>
+<section class="grid" id="grid"></section>
+<div class="empty" id="empty">沒有找到符合條件的歌曲</div>
+</main>
+<div class="modal" id="modal"><div class="modal-card"><h2>🌸 念念推薦</h2><div class="big" id="pickSong"></div><div id="pickArtist"></div><button class="close" id="closeModal" type="button">謝謝尼的歌單啊！</button></div></div>
 
 <script src="./script.js?v=1001"></script>
 </body>
