@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
@@ -10,7 +11,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;700&amp;family=Zen+Maru+Gothic:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
 <link href="style.css" rel="stylesheet"/>
 
-<!-- 背景 CSS -->
 <style>
 body {
   background:
@@ -229,7 +229,6 @@ body::after{
 
 <body>
 
-<!-- 背景元素 -->
 <div class="bg-art"></div>
 <div class="bg-clouds"></div>
 <div class="bg-blossom">
@@ -241,14 +240,13 @@ body::after{
 <div class="bg-ribbon"><span></span></div>
 <div class="bg-fan"></div>
 
-<!-- 原本內容不動 -->
 <div class="float-layer" id="floatLayer"></div>
 
 <main class="wrap">
 <section class="hero">
 <span class="eyebrow"> ♫</span>
-<h1>念念の歌單</h1>
-<p>公主城堡歡迎你。</p>
+<h1 id="siteTitle">念念の歌單</h1>
+<p id="siteSubtitle">公主城堡歡迎你。</p>
 
 <div class="controls">
 <input class="search" id="search" placeholder="搜尋歌名、歌手或分類…"/>
@@ -272,13 +270,14 @@ body::after{
 
 <div class="modal" id="modal">
   <div class="modal-card">
-    <h2>🍓念念推薦</h2>
+    <h2 id="modalTitle">🍓念念推薦</h2>
     <div class="big" id="pickSong"></div>
     <div id="pickArtist"></div>
     <button class="close" id="closeModal" type="button">謝謝尼的歌單啊！</button>
   </div>
 </div>
 
-<script src="./script.js?v=1001"></script>
+<script src="./script.js?v=1002"></script>
 </body>
 </html>
+```
