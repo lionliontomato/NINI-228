@@ -1,3 +1,4 @@
+```javascript
 const SHEET_ID = '1edQluuSI99deIJtjZO4wJP9c36E74tH3VAQv5pNCChM';
 const SHEET_GID = '0';
 
@@ -28,6 +29,47 @@ function parseTags(text) {
     .filter(function(t) { return t && t !== '-' && t !== '—' && t !== '標籤'; });
 }
 
+function isSettingKey(text) {
+  return [
+    '網站標題',
+    '網站小標題',
+    '抽歌視窗標題',
+    '彈窗標題',
+    '關閉按鈕文字',
+    '關閉按鈕'
+  ].includes(text);
+}
+
+function applySiteSettings(rows) {
+  const settings = {};
+
+  rows.forEach(function(row) {
+    const key = cell(row, 7);   // H欄：設定名稱
+    const value = cell(row, 8); // I欄：設定內容
+
+    if (key && value) {
+      settings[key] = value;
+    }
+  });
+
+  const title = settings['網站標題'] || '念念の歌單';
+  const subtitle = settings['網站小標題'] || '公主城堡歡迎你。';
+  const modalTitle = settings['抽歌視窗標題'] || settings['彈窗標題'] || '🍓念念推薦';
+  const closeText = settings['關閉按鈕文字'] || settings['關閉按鈕'] || '謝謝尼的歌單啊！';
+
+  const siteTitle = document.getElementById('siteTitle');
+  const siteSubtitle = document.getElementById('siteSubtitle');
+  const modalTitleEl = document.getElementById('modalTitle');
+  const closeModal = document.getElementById('closeModal');
+
+  if (siteTitle) siteTitle.textContent = title;
+  if (siteSubtitle) siteSubtitle.textContent = subtitle;
+  if (modalTitleEl) modalTitleEl.textContent = modalTitle;
+  if (closeModal) closeModal.textContent = closeText;
+
+  document.title = title;
+}
+
 function loadSheet() {
   const status = document.getElementById('status');
   status.textContent = '讀取中…';
@@ -36,22 +78,27 @@ function loadSheet() {
   if (oldScript) oldScript.remove();
 
   const callbackName = 'playlistSheetCallback_' + Date.now();
-  const url = 'https://docs.google.com/spreadsheets/d/' + SHEET_ID + '/gviz/tq?gid=' + SHEET_GID + '&tqx=out:json;responseHandler:' + callbackName + '&t=' + Date.now();
+
+  // 加上 headers=0，避免 Google 試算表自動把第 2 列標籤當成標題列跳過
+  const url = 'https://docs.google.com/spreadsheets/d/' + SHEET_ID + '/gviz/tq?gid=' + SHEET_GID + '&headers=0&tqx=out:json;responseHandler:' + callbackName + '&t=' + Date.now();
 
   window[callbackName] = function(response) {
     clearTimeout(sheetTimeout);
 
     try {
       const rows = response && response.table && response.table.rows ? response.table.rows : [];
+
+      applySiteSettings(rows);
+
       const loadedSongs = [];
       const masterTags = [];
 
       rows.forEach(function(row) {
-        const title = cell(row, 0);
-        const artist = cell(row, 1);
-        const category = cell(row, 2);
-        const link = cell(row, 3);
-        const masterTagCell = cell(row, 5);
+        const title = cell(row, 0);          // A欄：歌名
+        const artist = cell(row, 1);         // B欄：歌手
+        const category = cell(row, 2);       // C欄：分類
+        const link = cell(row, 3);           // D欄：連結
+        const masterTagCell = cell(row, 5);  // F欄：上方標籤
 
         parseTags(masterTagCell).forEach(function(t) {
           masterTags.push(t);
@@ -59,7 +106,7 @@ function loadSheet() {
 
         const looksLikeHeader = ['歌名', '歌曲', '曲名', 'title'].includes(title.toLowerCase());
 
-        if (title && !looksLikeHeader) {
+        if (title && !looksLikeHeader && !isSettingKey(title)) {
           loadedSongs.push({
             title: title,
             artist: artist || '未填歌手',
@@ -75,22 +122,26 @@ function loadSheet() {
         tags = Array.from(new Set(masterTags));
       } else {
         const fromSongs = [];
+
         songs.forEach(function(s) {
           parseTags(s.category).forEach(function(t) {
             fromSongs.push(t);
           });
         });
+
         tags = Array.from(new Set(fromSongs));
       }
 
       status.textContent = '';
       renderTags();
       renderSongs();
+
     } catch (err) {
       console.error(err);
-      showSheetError('試算表格式解析失敗，請確認 A欄歌名、B欄歌手、C欄分類、F欄標籤。');
+      showSheetError('試算表格式解析失敗，請確認 A欄歌名、B欄歌手、C欄分類、F欄標籤，H欄/I欄可放網站設定。');
     } finally {
       delete window[callbackName];
+
       const s = document.getElementById('sheetJsonp');
       if (s) s.remove();
     }
@@ -111,6 +162,9 @@ function loadSheet() {
   sheetTimeout = setTimeout(function() {
     showSheetError('讀取試算表逾時，請重新整理頁面或確認試算表權限。');
     delete window[callbackName];
+
+    const s = document.getElementById('sheetJsonp');
+    if (s) s.remove();
   }, 12000);
 }
 
@@ -149,7 +203,12 @@ function matchSong(s) {
   const q = query.trim().toLowerCase();
   const categories = parseTags(s.category);
   const text = (s.title + ' ' + s.artist + ' ' + s.category).toLowerCase();
-  const tagOk = !activeTag || categories.includes(activeTag) || s.artist === activeTag || s.category.includes(activeTag);
+
+  const tagOk =
+    !activeTag ||
+    categories.includes(activeTag) ||
+    s.artist === activeTag ||
+    s.category.includes(activeTag);
 
   return tagOk && (!q || text.includes(q));
 }
@@ -219,6 +278,7 @@ function renderSongs() {
       card.addEventListener('dblclick', function() {
         window.open(s.link, '_blank', 'noopener,noreferrer');
       });
+
       card.title = '雙擊開啟歌曲連結';
     }
 
@@ -260,13 +320,16 @@ document.getElementById('modal').onclick = function(e) {
 
   for (let i = 0; i < 28; i++) {
     const el = document.createElement('span');
+
     el.className = 'float';
     el.textContent = symbols[i % symbols.length];
     el.style.setProperty('--left', Math.random() * 100 + '%');
     el.style.setProperty('--dur', (10 + Math.random() * 14) + 's');
     el.style.setProperty('--delay', (-Math.random() * 16) + 's');
+
     layer.appendChild(el);
   }
 })();
 
 loadSheet();
+```
