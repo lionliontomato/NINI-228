@@ -34,41 +34,67 @@ function parseTags(text) {
   return String(text || '')
     .replace(/[｜|／\/;；、，\n\r]/g, ',')
     .split(',')
-    .map(function (t) {
-      return t.trim();
-    })
-    .filter(function (t) {
-      return t && t !== '-' && t !== '—' && t !== '標籤';
-    });
+    .map(t => t.trim())
+    .filter(t => t && t !== '-' && t !== '—' && t !== '標籤');
+}
+
+function normalizeSettingKey(value) {
+  return String(value || '')
+    .replace(/[：:]/g, '')
+    .replace(/\s+/g, '')
+    .trim();
+}
+
+function addSetting(settings, key, value) {
+  const normalizedKey = normalizeSettingKey(key);
+  const normalizedValue = String(value || '').trim();
+
+  if (!normalizedKey || !normalizedValue) return;
+
+  if (normalizedKey.includes('網站標題')) settings['網站標題'] = normalizedValue;
+  if (normalizedKey.includes('網站小標題')) settings['網站小標題'] = normalizedValue;
+  if (normalizedKey.includes('抽歌視窗標題') || normalizedKey.includes('彈窗標題')) settings['抽歌視窗標題'] = normalizedValue;
+  if (normalizedKey.includes('關閉按鈕文字') || normalizedKey.includes('關閉按鈕')) settings['關閉按鈕文字'] = normalizedValue;
 }
 
 function isSettingKey(text) {
-  return [
-    '網站標題',
-    '網站小標題',
-    '抽歌視窗標題',
-    '彈窗標題',
-    '關閉按鈕文字',
-    '關閉按鈕'
-  ].includes(text);
+  const key = normalizeSettingKey(text);
+  return (
+    key.includes('網站標題') ||
+    key.includes('網站小標題') ||
+    key.includes('抽歌視窗標題') ||
+    key.includes('彈窗標題') ||
+    key.includes('關閉按鈕文字') ||
+    key.includes('關閉按鈕')
+  );
 }
 
 function applySiteSettings(rows) {
   const settings = {};
 
   rows.forEach(function (row) {
-    const key = cell(row, 7);
-    const value = cell(row, 8);
+    const hKey = cell(row, 7);
+    const iValue = cell(row, 8);
 
-    if (key && value) {
-      settings[key] = value;
+    addSetting(settings, hKey, iValue);
+
+    for (let i = 0; i < 20; i++) {
+      const current = cell(row, i);
+      const next = cell(row, i + 1);
+
+      addSetting(settings, current, next);
+
+      const inlineMatch = current.match(/^(網站標題|網站小標題|抽歌視窗標題|彈窗標題|關閉按鈕文字|關閉按鈕)\s*[：:]\s*(.+)$/);
+      if (inlineMatch) {
+        addSetting(settings, inlineMatch[1], inlineMatch[2]);
+      }
     }
   });
 
-  const title = settings['網站標題'] || '念念の歌單';
-  const subtitle = settings['網站小標題'] || '公主城堡歡迎你。';
-  const modalTitle = settings['抽歌視窗標題'] || settings['彈窗標題'] || '🌸念念推薦';
-  const closeText = settings['關閉按鈕文字'] || settings['關閉按鈕'] || '謝謝尼的歌單啊！';
+  const title = settings['網站標題'] || '';
+  const subtitle = settings['網站小標題'] || '';
+  const modalTitle = settings['抽歌視窗標題'] || '';
+  const closeText = settings['關閉按鈕文字'] || '';
 
   const siteTitle = document.getElementById('siteTitle');
   const siteSubtitle = document.getElementById('siteSubtitle');
@@ -77,10 +103,10 @@ function applySiteSettings(rows) {
 
   if (siteTitle) siteTitle.textContent = title;
   if (siteSubtitle) siteSubtitle.textContent = subtitle;
-  if (modalTitleEl) modalTitleEl.textContent = modalTitle;
-  if (closeModal) closeModal.textContent = closeText;
+  if (modalTitleEl && modalTitle) modalTitleEl.textContent = modalTitle;
+  if (closeModal && closeText) closeModal.textContent = closeText;
 
-  document.title = title;
+  document.title = title || 'Loading...';
 }
 
 function buildSheetUrl(callbackName) {
@@ -144,9 +170,7 @@ function loadSheet() {
           masterTags.push(t);
         });
 
-        const looksLikeHeader = ['歌名', '歌曲', '曲名', 'title'].includes(
-          title.toLowerCase()
-        );
+        const looksLikeHeader = ['歌名', '歌曲', '曲名', 'title'].includes(title.toLowerCase());
 
         if (title && !looksLikeHeader && !isSettingKey(title)) {
           loadedSongs.push({
